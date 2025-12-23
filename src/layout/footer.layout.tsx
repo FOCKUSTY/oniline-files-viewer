@@ -1,9 +1,7 @@
-'use client'
+"use client";
 
 export const FooterLayout = () => {
   return (
-    <footer className="py-6">
-      © {new Date().getFullYear()} The Void
-    </footer>
-  )
-}
+    <footer className="py-6">© {new Date().getFullYear()} The Void</footer>
+  );
+};

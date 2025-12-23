@@ -1,4 +1,4 @@
-'use client'
+"use client";
 
 import { LogoComponent } from "@/components/logo.component";
 import { Links } from "@/constants";
@@ -9,6 +9,6 @@ export const HeaderLayout = () => {
       <LogoComponent links={Links.the_void}>
         <h1 id="main-logo">The Void</h1>
       </LogoComponent>
-     </header>
+    </header>
   );
 };

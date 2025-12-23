@@ -1,19 +1,19 @@
 import type { ReactNode } from "react";
-import type { Metadata } from 'next'
+import type { Metadata } from "next";
 
-import { Inter } from 'next/font/google'
+import { Inter } from "next/font/google";
 
 import { Human } from "@/components/human.component";
 import { HeaderLayout } from "@/layout/header.layout";
 import { FooterLayout } from "@/layout/footer.layout";
 
-import './globals.css'
+import "./globals.css";
 
-const inter = Inter({ subsets: ['latin'] })
+const inter = Inter({ subsets: ["latin"] });
 export const metadata: Metadata = {
-  title: 'Markdown Редактор',
-  description: 'Онлайн редактор Markdown с реальным предпросмотром',
-}
+  title: "Markdown Редактор",
+  description: "Онлайн редактор Markdown с реальным предпросмотром",
+};
 
 const RootLayout = ({
   children,
@@ -28,9 +28,7 @@ const RootLayout = ({
 
         <HeaderLayout />
 
-        <main>
-          {children}
-        </main>
+        <main>{children}</main>
 
         <FooterLayout />
       </body>

@@ -10,6 +10,7 @@
     "format": "biome format --write"
   },
   "dependencies": {
+    "@lazy-and-focused/prettier-config": "^1.0.0",
     "@tailwindcss/typography": "^0.5.19",
     "lucide-react": "^0.562.0",
     "next": "16.1.1",
@@ -27,6 +28,7 @@
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "@types/react-syntax-highlighter": "^15.5.13",
+    "prettier": "^3.7.4",
     "tailwindcss": "^4",
     "typescript": "^5"
   }

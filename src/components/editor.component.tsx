@@ -1,7 +1,7 @@
-'use client'
+"use client";
 
 type Props = {
-  onEdit: (value: string) => unknown
+  onEdit: (value: string) => unknown;
 };
 
 export const EditorComponent = ({ onEdit }: Props) => {
@@ -15,7 +15,7 @@ export const EditorComponent = ({ onEdit }: Props) => {
         className={[
           "flex-1 w-full p-4 resize-none backdrop-blur-sm rounded-lg font-mono",
           "ring-2 ring-(--mini-text-color)",
-          "focus:outline-none focus:ring-2 focus:ring-(--foreground)"
+          "focus:outline-none focus:ring-2 focus:ring-(--foreground)",
         ].join(" ")}
         placeholder="Начните писать Markdown здесь..."
         spellCheck="false"
@@ -26,5 +26,5 @@ export const EditorComponent = ({ onEdit }: Props) => {
         <span>Ctrl+S для сохранения файла</span>
       </div>
     </div>
-  )
-}
+  );
+};
