@@ -1,5 +1,197 @@
+@import url("https://fonts.googleapis.com/css2?family=Comfortaa:wght@300..700&family=Shantell+Sans:ital,wght@0,300..800;1,300..800&display=swap");
+
 @import "tailwindcss";
+@import "./reset.css";
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+:root {
+  --background: #0a0a0a;
+  --foreground: #ededed;
+  --text-color: #ededed;
+
+  --component-color: #272727;
+  --card-color: #27272790;
+  --card-bg-size: 300px 300px;
+  --card-bg-repeat: repeat;
+  --smooth-background-color: #111111;
+
+  --mini-text-color: #ededed40;
+
+  --fs-h1: 36px;
+  --fs-h2: 32px;
+  --fs-h3: 24px;
+  --fs-h4: 20px;
+  --fs-h5: 18px;
+  --fs-base: 16px;
+  --fs-mini: 14px;
+}
+
+html,
+body {
+  max-width: 100vw;
+  overflow-x: hidden;
+}
+
+body {
+  color: var(--text-color);
+  background: var(--background);
+
+  font-family: Arial, Helvetica, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+
+*::-webkit-scrollbar {
+  width: 0.75em;
+}
+
+*::-webkit-scrollbar-track {
+  border-radius: 10px;
+
+  background: var(--smooth-background-color);
+}
+
+*::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+
+  background-color: var(--background);
+  border: 2px solid var(--mini-text-color);
+}
+
+a {
+  color: inherit;
+  text-decoration: underline;
+}
+
+span,
+a,
+p,
+button {
+  font-size: 16px;
+}
+
+button {
+  cursor: pointer;
+  border: 0;
+
+  padding: 0.25em 0.5em;
+  border-radius: 0.5em;
+  background-color: var(--card-color);
+  background-image: var(--card-bg-image);
+  background-blend-mode: var(--card-bg-blend);
+  background-size: var(--card-bg-size);
+  background-repeat: var(--card-bg-repeat);
+}
+
+footer,
+header {
+  padding: 0.75em 2em;
+
+  height: 120px;
+  width: 100%;
+
+  background: #00000080;
+}
+
+main {
+  position: relative;
+  min-height: calc(100vh - 240px + 2em);
+  margin: 120px 0 0 0;
+}
+
+header {
+  top: 0;
+  -webkit-box-shadow: 0 10px 20px 0 #00000080;
+  -moz-box-shadow: 0 10px 20px 0 #00000080;
+  box-shadow: 0 10px 20px 0 #00000080;
+  border-radius: 0 0 20px 20px;
+}
+
+footer {
+  height: calc(120px - 2em);
+
+  position: relative;
+  max-height: 240px;
+
+  -webkit-box-shadow: 0 -10px 20px 0 #00000080;
+  -moz-box-shadow: 0 -10px 20px 0 #00000080;
+  box-shadow: 0 -10px 20px 0 #00000080;
+  border-radius: 20px 20px 0 0;
+}
+
+.page-center {
+  position: relative;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+
+  height: 100%;
+}
+
+.background {
+  z-index: 0;
+
+  width: 100%;
+  height: 1080px;
+  position: fixed;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-image: url("/background.png");
+}
+
+.human-container {
+  position: fixed;
+  display: flex;
+
+  align-items: center;
+
+  top: 0;
+  left: 0;
+
+  height: 100%;
+  width: 100%;
+}
+
+.human {
+  z-index: 5;
+
+  --animation-start-top: -2em;
+
+  position: relative;
+
+  height: 40em;
+  width: 25em;
+
+  top: var(--animation-start-top);
+
+  animation: 3s ease-in-out infinite forwards;
+  animation-name: human-levitation;
+}
+
+@keyframes human-levitation {
+  0% {
+    top: var(--animation-start-top);
+  }
+
+  50% {
+    top: 2em;
+  }
+
+  100% {
+    top: var(--animation-start-top);
+  }
+}
+
+.noselect {
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
