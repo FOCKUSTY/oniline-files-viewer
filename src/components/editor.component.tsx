@@ -1,12 +1,16 @@
 "use client";
 
+import { useState } from "react";
+
 type Props = {
   onEdit: (value: string) => unknown;
   updateUrl: (value: string) => unknown;
-  content: string;
+  content?: string;
 };
 
-export const EditorComponent = ({ onEdit, updateUrl, content }: Props) => {
+export const EditorComponent = ({ onEdit, updateUrl, content = "" }: Props) => {
+  const [componentTimeout, setComponentTimeout] = useState<NodeJS.Timeout | null>(null);
+
   return (
     <div className="flex flex-col h-[600px] bg-(--bg-card) py-4 px-8 rounded-lg">
       <h2>Редактирование .md</h2>
@@ -16,7 +20,14 @@ export const EditorComponent = ({ onEdit, updateUrl, content }: Props) => {
         onChange={(e) => {
           const { value } = e.currentTarget;
           onEdit(value);
-          updateUrl(value);
+
+          if (componentTimeout) {
+            clearTimeout(componentTimeout);
+          }
+
+          setComponentTimeout(setTimeout(() => {
+            updateUrl(value);
+          }, 1000));
         }}
         value={content}
         className={[
