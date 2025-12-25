@@ -27,6 +27,9 @@ const Page = () => {
         <Button onClick={() => {
           saveFile(markdown, "markdown.md");
         }}>Сохранить</Button>
+        <Button onClick={() => {
+          navigator.clipboard.writeText(markdown);
+        }}>Скопировать</Button>
         <Button>Поделиться</Button>
 
         {isEditorShowing && <Button onClick={() => setIsPreviewShowing(!isPreviewShowing)}>
