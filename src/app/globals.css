@@ -1,25 +1,34 @@
 @import url("https://fonts.googleapis.com/css2?family=Comfortaa:wght@300..700&family=Shantell+Sans:ital,wght@0,300..800;1,300..800&display=swap");
 
-@import "tailwindcss";
+@import "./safelist.css";
 @import "./reset.css";
+
+@import "tailwindcss";
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 :root {
-  --background: #0a0a0a;
-  --foreground: #ededed;
-  --text-color: #ededed;
-
-  --component-color: #272727;
-  --card-color: #27272790;
-  --card-bg-size: 300px 300px;
-  --card-bg-repeat: repeat;
-  --smooth-background-color: #111111;
-
-  --mini-text-color: #ededed40;
-
+  --bg-default: #0a0a0a;
+  --bg-component: #00000065;
+  --bg-smooth: #111111;
+  --bg-card: #27272790;
+  
+  --image-bg: url("./assets/background.png");
+  
+  --fg-default: #ededed;
+  --fg-text: #ededed;
+  --fg-mini-text: #ededed80;
+  --fg-card: #27272790;
+  --fg-component: #272727;
+  
+  --btn-default: var(--fg-default);
+  --btn-primary: color-mix(in oklab, var(--fg-default) 80%, #2aff6a 30%);
+  --btn-danger: color-mix(in oklab, var(--fg-default) 60%, #ff0000 50%);
+  --btn-secondary: color-mix(in oklab, var(--fg-default) 80%, #000000 30%);
+  --btn-tetriary: color-mix(in oklab, var(--fg-default) 70%, #000000 40%);
+  
   --fs-h1: 36px;
   --fs-h2: 32px;
   --fs-h3: 24px;
@@ -36,8 +45,8 @@ body {
 }
 
 body {
-  color: var(--text-color);
-  background: var(--background);
+  color: var(--fg-default);
+  background: var(--bg-default);
 
   font-family: Arial, Helvetica, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -71,19 +80,6 @@ a,
 p,
 button {
   font-size: 16px;
-}
-
-button {
-  cursor: pointer;
-  border: 0;
-
-  padding: 0.25em 0.5em;
-  border-radius: 0.5em;
-  background-color: var(--card-color);
-  background-image: var(--card-bg-image);
-  background-blend-mode: var(--card-bg-blend);
-  background-size: var(--card-bg-size);
-  background-repeat: var(--card-bg-repeat);
 }
 
 footer,

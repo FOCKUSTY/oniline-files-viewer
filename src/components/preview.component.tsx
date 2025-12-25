@@ -11,7 +11,7 @@ type Props = {
 
 export const PreviewComponent = ({ markdown }: Props) => {
   return (
-    <div className="flex flex-col h-[600px] bg-(--card-color) py-4 px-8 rounded-lg">
+    <div className="flex flex-col h-[600px] bg-(--bg-card) py-4 px-8 rounded-lg">
       <h2>Предпросмотр</h2>
 
       <ReactMarkdown
