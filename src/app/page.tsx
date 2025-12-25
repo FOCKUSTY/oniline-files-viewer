@@ -4,24 +4,38 @@ import { EditorComponent } from "@/components/editor.component";
 import { PreviewComponent } from "@/components/preview.component";
 import { Button } from "@/ui/button.ui";
 
-import { useState } from "react";
+import { Activity, useState } from "react";
 
 const Page = () => {
   const [markdown, setMarkdown] = useState<string>("");
-  const [isPreviewShowing, setIsPreviewShowing] = useState<boolean>(false);
+  const [isEditorShowing, setIsEditorShowing] = useState<boolean>(true);
+  const [isPreviewShowing, setIsPreviewShowing] = useState<boolean>(true);
 
-  const showPreview = true;
-  const gridCollumns = showPreview
+  const gridCollumns = (isEditorShowing && isPreviewShowing)
     ? "grid-cols-1 lg:grid-cols-2"
     : "grid-cols-1";
 
   return (
-    <div className="min-h-full flex justify-center content-center flex-wrap">
-      <div>
+    <div className="min-h-full flex flex-col gap-4 justify-center content-center flex-wrap">
+      <div className="w-full flex flex-row gap-2 justify-center">
+        {isPreviewShowing && <Button onClick={() => setIsEditorShowing(!isEditorShowing)}>
+          {isEditorShowing ? "Скрыть" : "Показать"} редактор
+        </Button>}
+
+        <Button>Сохранить</Button>
+        <Button>Поделиться</Button>
+
+        {isEditorShowing && <Button onClick={() => setIsPreviewShowing(!isPreviewShowing)}>
+          {isPreviewShowing ? "Скрыть" : "Показать"} предпросмотр
+        </Button>}
       </div>
+
       <div className={`grid gap-6 ${gridCollumns}`}>
-        <EditorComponent onEdit={setMarkdown} />
-        {showPreview && <PreviewComponent markdown={markdown} />}
+        <Activity mode={isEditorShowing ? "visible" : "hidden"}>
+          <EditorComponent onEdit={setMarkdown} />
+        </Activity>
+
+        {isPreviewShowing && <PreviewComponent markdown={markdown} />}
       </div>
     </div>
   );
