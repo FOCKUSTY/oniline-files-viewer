@@ -30,6 +30,7 @@ const Page = () => {
         <Button onClick={() => {
           navigator.clipboard.writeText(markdown);
         }}>Скопировать</Button>
+
         <Button>Поделиться</Button>
 
         {isEditorShowing && <Button onClick={() => setIsPreviewShowing(!isPreviewShowing)}>
