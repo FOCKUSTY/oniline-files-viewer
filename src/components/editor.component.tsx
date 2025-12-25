@@ -14,7 +14,7 @@ export const EditorComponent = ({ onEdit, updateUrl, content }: Props) => {
       <textarea
         id="markdown-editor"
         onChange={(e) => {
-          const { value } = e.currentTarget; 
+          const { value } = e.currentTarget;
           onEdit(value);
           updateUrl(value);
         }}

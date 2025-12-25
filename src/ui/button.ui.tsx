@@ -8,20 +8,28 @@ export const BUTTON_VARIANTS = [
   "tetriary",
 ] as const;
 
-type ButtonProps = DetailedHTMLProps<ButtonHTMLAttributes<HTMLButtonElement>, HTMLButtonElement>;
+type ButtonProps = DetailedHTMLProps<
+  ButtonHTMLAttributes<HTMLButtonElement>,
+  HTMLButtonElement
+>;
 
 type Props = {
   children: ReactNode;
   variant?: (typeof BUTTON_VARIANTS)[number];
 } & ButtonProps;
 
-export const Button = ({ children, variant = "default", className, ...props }: Props) => {
+export const Button = ({
+  children,
+  variant = "default",
+  className,
+  ...props
+}: Props) => {
   return (
     <button
       className={[
         "bg-(--fg-card) px-4 py-2 rounded-lg page",
         `color-${variant}`,
-        className
+        className,
       ].join(" ")}
       {...props}
     >

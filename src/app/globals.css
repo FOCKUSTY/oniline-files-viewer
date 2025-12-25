@@ -14,21 +14,21 @@
   --bg-component: #00000065;
   --bg-smooth: #111111;
   --bg-card: #27272790;
-  
+
   --image-bg: url("./assets/background.png");
-  
+
   --fg-default: #ededed;
   --fg-text: #ededed;
   --fg-mini-text: #ededed80;
   --fg-card: #27272790;
   --fg-component: #272727;
-  
+
   --btn-default: var(--fg-default);
   --btn-primary: color-mix(in oklab, var(--fg-default) 80%, #2aff6a 30%);
   --btn-danger: color-mix(in oklab, var(--fg-default) 60%, #ff0000 50%);
   --btn-secondary: color-mix(in oklab, var(--fg-default) 80%, #000000 30%);
   --btn-tetriary: color-mix(in oklab, var(--fg-default) 70%, #000000 40%);
-  
+
   --fs-h1: 36px;
   --fs-h2: 32px;
   --fs-h3: 24px;

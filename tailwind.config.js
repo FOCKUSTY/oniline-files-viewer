@@ -7,8 +7,7 @@ module.exports = {
     "./ui/**/*.{js,ts,jsx,tsx,mdx}",
   ],
   theme: {
-    extend: {
-    },
+    extend: {},
   },
   plugins: [require("@tailwindcss/typography")],
 };
