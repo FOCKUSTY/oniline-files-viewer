@@ -8,6 +8,7 @@ export const Human = () => {
       <Image
         width={597}
         height={935}
+        loading="eager"
         className="human noselect"
         src={"/human.png"}
         alt="human"
