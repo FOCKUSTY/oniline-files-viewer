@@ -1,6 +1,6 @@
-import type { ReactNode } from "react";
+import type { ButtonHTMLAttributes, DetailedHTMLProps, ReactNode } from "react";
 
-export const button = [
+export const BUTTON_VARIANTS = [
   "default",
   "primary",
   "danger",
@@ -8,18 +8,22 @@ export const button = [
   "tetriary",
 ] as const;
 
+type ButtonProps = DetailedHTMLProps<ButtonHTMLAttributes<HTMLButtonElement>, HTMLButtonElement>;
+
 type Props = {
   children: ReactNode;
-  type?: (typeof button)[number];
-};
+  variant?: (typeof BUTTON_VARIANTS)[number];
+} & ButtonProps;
 
-export const Button = ({ children, type = "default" }: Props) => {
+export const Button = ({ children, variant = "default", className, ...props }: Props) => {
   return (
     <button
       className={[
         "bg-(--fg-card) px-1 py-2 rounded-lg page",
-        `color-${type}`,
+        `color-${variant}`,
+        className
       ].join(" ")}
+      {...props}
     >
       {children}
     </button>

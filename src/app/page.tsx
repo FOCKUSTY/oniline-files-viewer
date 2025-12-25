@@ -2,6 +2,7 @@
 
 import { EditorComponent } from "@/components/editor.component";
 import { PreviewComponent } from "@/components/preview.component";
+import { Button } from "@/ui/button.ui";
 
 import { useState } from "react";
 
@@ -15,18 +16,12 @@ const Page = () => {
     : "grid-cols-1";
 
   return (
-    <div className="h-screen flex justify-center content-center flex-wrap">
+    <div className="min-h-full flex justify-center content-center flex-wrap">
       <div>
-
       </div>
-
       <div className={`grid gap-6 ${gridCollumns}`}>
         <EditorComponent onEdit={setMarkdown} />
         {showPreview && <PreviewComponent markdown={markdown} />}
-      </div>
-      
-      <div>
-        
       </div>
     </div>
   );
