@@ -15,47 +15,61 @@ import {
 } from "@/services/encode-content.service";
 
 type Props = {
-  query: Promise<{ content?: string, fileName?: string }>;
+  query: Promise<{ json?: string }>;
 }
+
+type JsonData = Partial<{
+  content: string,
+  fileName: string,
+  previewShowed: boolean,
+  editorShowed: boolean
+}>
 
 export const Editor = ({ query }: Props) => {
   const router = useRouter();
 
-  const { content, fileName } = use(query);
+  const { json } = use(query);
+  const { content, fileName, editorShowed, previewShowed } = JSON.parse(json || "{}") as JsonData;
 
-  const [markdown, setMarkdown] = useState<string>("");
-  const [isEditorShowing, setIsEditorShowing] = useState<boolean>(true);
-  const [isPreviewShowing, setIsPreviewShowing] = useState<boolean>(true);
+  const [jsonData, setJsonData] = useState<Required<JsonData>>({
+    content: content || "",
+    fileName: fileName || "markdown.md",
+    editorShowed: editorShowed || true,
+    previewShowed: previewShowed || true
+  });
 
   const gridCollumns =
-    isEditorShowing && isPreviewShowing
+    jsonData.editorShowed && jsonData.previewShowed
       ? "grid-cols-1 lg:grid-cols-2"
       : "grid-cols-1";
 
-  const updateUrl = (value: string) => {
-    const encodedContent = encodeContent(value);
-    const newUrl = `/?content=${encodedContent}${`&filename=${encodeURIComponent("markdown.md")}`}`;
+  const updateUrlAndJson = (parameter: JsonData) => {
+    const data = {
+      ...jsonData,
+      ...parameter,
+    } as Required<JsonData>;
+
+    setJsonData(data);
+    
+    const jsonUriComponent = encodeURIComponent(JSON.stringify(data));
+    const newUrl = '/?json=' + jsonUriComponent;
     router.replace(newUrl, { scroll: false });
   };
 
   const share = () => {
     const url = new URL(window.location.href);
-    url.searchParams.set("content", encodeContent(markdown));
+    url.searchParams.set("json", encodeContent(JSON.stringify(jsonData)));
     navigator.clipboard.writeText(url.toString());
   };
 
   useEffect(() => {
-    if (!content) {
-      return;
-    }
-
     try {
-      const decodedContent = decodeContent(content);
-      if (!decodedContent) {
-        return;
-      }
-
-      setMarkdown(decodedContent);
+      setJsonData({
+        content: content || "",
+        fileName: fileName || "markdown.md",
+        editorShowed: editorShowed || true,
+        previewShowed: previewShowed || true
+      });
     } catch (error) {
       console.error("Ошибка при декодировании контента из URL");
     }
@@ -64,22 +78,24 @@ export const Editor = ({ query }: Props) => {
   return (
     <div className="min-h-full flex flex-col gap-4 justify-center content-center flex-wrap">
       <div className="w-full flex flex-row flex-wrap gap-2 justify-center">
-        {isPreviewShowing && (
-          <Button onClick={() => setIsEditorShowing(!isEditorShowing)}>
-            {isEditorShowing ? "Скрыть" : "Показать"} редактор
+        {jsonData.previewShowed && (
+          <Button onClick={() => {
+            updateUrlAndJson({editorShowed: !jsonData.editorShowed});
+          }}>
+            {jsonData.editorShowed ? "Скрыть" : "Показать"} редактор
           </Button>
         )}
 
         <Button
           onClick={() => {
-            saveFile(markdown, "markdown.md");
+            saveFile(jsonData.content || "", "markdown.md");
           }}
         >
           Сохранить
         </Button>
         <Button
           onClick={() => {
-            navigator.clipboard.writeText(markdown);
+            navigator.clipboard.writeText(jsonData.content || "");
           }}
         >
           Скопировать
@@ -87,23 +103,25 @@ export const Editor = ({ query }: Props) => {
 
         <Button onClick={share}>Поделиться</Button>
 
-        {isEditorShowing && (
-          <Button onClick={() => setIsPreviewShowing(!isPreviewShowing)}>
-            {isPreviewShowing ? "Скрыть" : "Показать"} предпросмотр
+        {jsonData.editorShowed && (
+          <Button onClick={() => {
+            updateUrlAndJson({previewShowed: !jsonData.previewShowed});
+          }}>
+            {jsonData.previewShowed ? "Скрыть" : "Показать"} предпросмотр
           </Button>
         )}
       </div>
 
       <div className={`grid gap-6 ${gridCollumns}`}>
-        <Activity mode={isEditorShowing ? "visible" : "hidden"}>
+        <Activity mode={jsonData.editorShowed ? "visible" : "hidden"}>
           <EditorComponent
-            content={markdown}
-            updateUrl={updateUrl}
-            onEdit={setMarkdown}
+            content={jsonData.content || ""}
+            updateUrl={(value: string) => updateUrlAndJson({content: value})}
+            onEdit={(value: string) => setJsonData((p) => ({...p, content: value}))}
           />
         </Activity>
 
-        {isPreviewShowing && <PreviewComponent markdown={markdown} />}
+        {jsonData.previewShowed && <PreviewComponent markdown={jsonData.content || ""} />}
       </div>
     </div>
   );
