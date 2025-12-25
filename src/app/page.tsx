@@ -2,7 +2,9 @@
 
 import { EditorComponent } from "@/components/editor.component";
 import { PreviewComponent } from "@/components/preview.component";
+
 import { Button } from "@/ui/button.ui";
+import { saveFile } from "@/services/save-file.service";
 
 import { Activity, useState } from "react";
 
@@ -17,12 +19,14 @@ const Page = () => {
 
   return (
     <div className="min-h-full flex flex-col gap-4 justify-center content-center flex-wrap">
-      <div className="w-full flex flex-row gap-2 justify-center">
+      <div className="w-full flex flex-row flex-wrap gap-2 justify-center">
         {isPreviewShowing && <Button onClick={() => setIsEditorShowing(!isEditorShowing)}>
           {isEditorShowing ? "Скрыть" : "Показать"} редактор
         </Button>}
 
-        <Button>Сохранить</Button>
+        <Button onClick={() => {
+          saveFile(markdown, "markdown.md");
+        }}>Сохранить</Button>
         <Button>Поделиться</Button>
 
         {isEditorShowing && <Button onClick={() => setIsPreviewShowing(!isPreviewShowing)}>
