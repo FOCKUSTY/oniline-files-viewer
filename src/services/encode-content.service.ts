@@ -1,15 +1,15 @@
 export const encodeContent = (content: string): string => {
   try {
-    return encodeURIComponent(btoa(encodeURIComponent(content)))
+    return encodeURIComponent(btoa(encodeURIComponent(content)));
   } catch {
-    return ''
+    return "";
   }
-}
+};
 
 export const decodeContent = (encoded: string): string => {
   try {
-    return decodeURIComponent(atob(decodeURIComponent(encoded)))
+    return decodeURIComponent(atob(decodeURIComponent(encoded)));
   } catch {
-    return ''
+    return "";
   }
-}
+};
