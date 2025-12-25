@@ -8,7 +8,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { Button } from "@/ui/button.ui";
 import { saveFile } from "@/services/save-file.service";
 
-import { Activity, useEffect, useRef, useState } from "react";
+import { Activity, useEffect, useState } from "react";
 import {
   decodeContent,
   encodeContent,
