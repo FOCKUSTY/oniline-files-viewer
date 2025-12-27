@@ -50,6 +50,16 @@ export const Editor = ({ query }: Props) => {
     
     const jsonUriComponent = compressToEncodedURIComponent(JSON.stringify(data));
     const newUrl = '/?json=' + jsonUriComponent;
+
+    if (newUrl.length >= 10000) {
+      for (let i=0; i < 100; i++) {
+        setTimeout(() => {
+          console.error("СООБЩИТЕ РАЗРАБОТЧИКУ ПОФИКСИТЬ ПРОБЛЕМУ: https://github.com/fockusty/oniline-files-viewer/issues/new");
+          console.error("ПИШИТЕ: ЗДРАВСТВУЙТЕ, ВАМ НУЖНО ПОФИКСИТЬ ПРОБЛЕМУ");
+        }, 50 * i);
+      }
+    }
+    
     router.replace(newUrl, { scroll: false });
   };
 
