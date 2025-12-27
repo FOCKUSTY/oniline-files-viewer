@@ -3,16 +3,11 @@
 import { EditorComponent } from "@/components/editor.component";
 import { PreviewComponent } from "@/components/preview.component";
 
-import { useRouter, useSearchParams } from "next/navigation";
-
 import { Button } from "@/ui/button.ui";
 import { saveFile } from "@/services/save-file.service";
 
+import { useRouter } from "next/navigation";
 import { Activity, use, useEffect, useState } from "react";
-import {
-  decodeContent,
-  encodeContent,
-} from "@/services/encode-content.service";
 
 import { compressToEncodedURIComponent, decompressFromEncodedURIComponent } from "lz-string"
 
