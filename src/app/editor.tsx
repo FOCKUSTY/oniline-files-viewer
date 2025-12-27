@@ -14,6 +14,8 @@ import {
   encodeContent,
 } from "@/services/encode-content.service";
 
+import { compressToEncodedURIComponent, decompressFromEncodedURIComponent } from "lz-string"
+
 type Props = {
   query: Promise<{ json?: string }>;
 }
@@ -29,7 +31,7 @@ export const Editor = ({ query }: Props) => {
   const router = useRouter();
 
   const { json } = use(query);
-  const { content, fileName, editorShowed, previewShowed } = JSON.parse(json || "{}") as JsonData;
+  const { content, fileName, editorShowed, previewShowed } = JSON.parse(json ? decompressFromEncodedURIComponent(json) : "{}") as JsonData;
 
   const [jsonData, setJsonData] = useState<Required<JsonData>>({
     content: content || "",
@@ -51,14 +53,14 @@ export const Editor = ({ query }: Props) => {
 
     setJsonData(data);
     
-    const jsonUriComponent = encodeURIComponent(JSON.stringify(data));
+    const jsonUriComponent = compressToEncodedURIComponent(JSON.stringify(data));
     const newUrl = '/?json=' + jsonUriComponent;
     router.replace(newUrl, { scroll: false });
   };
 
   const share = () => {
     const url = new URL(window.location.href);
-    url.searchParams.set("json", encodeContent(JSON.stringify(jsonData)));
+    url.searchParams.set("json", compressToEncodedURIComponent(JSON.stringify(jsonData)));
     navigator.clipboard.writeText(url.toString());
   };
 

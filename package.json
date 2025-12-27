@@ -13,6 +13,7 @@
     "@lazy-and-focused/prettier-config": "^1.0.0",
     "@tailwindcss/typography": "^0.5.19",
     "lucide-react": "^0.562.0",
+    "lz-string": "^1.5.0",
     "next": "16.1.1",
     "react": "19.2.3",
     "react-dom": "19.2.3",
