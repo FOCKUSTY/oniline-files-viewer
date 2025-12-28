@@ -1,7 +1,5 @@
 "use client";
 
-import { useState } from "react";
-
 type Props = {
   onEdit: (value: string) => unknown;
   content?: string;

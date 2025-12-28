@@ -18,7 +18,7 @@ const RootLayout = ({
   children: ReactNode;
 }>) => {
   return (
-    <html lang="ru">
+    <html data-shiftshift-theme="system" lang="ru">
       <body>
         <div className="background"></div>
         <Human />

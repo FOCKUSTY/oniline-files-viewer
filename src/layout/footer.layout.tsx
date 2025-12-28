@@ -2,6 +2,6 @@
 
 export const FooterLayout = () => {
   return (
-    <footer>© {new Date().getFullYear()} The Void</footer>
+    <footer>© 2025-{new Date().getFullYear()} The Void</footer>
   );
 };

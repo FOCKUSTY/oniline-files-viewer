@@ -1,13 +1,19 @@
 "use client";
 
+import type { CSSProperties } from "react";
+
 import { EditorComponent } from "@/components/editor.component";
 import { PreviewComponent } from "@/components/preview.component";
 
 import { Button } from "@/ui/button.ui";
 import { saveFile } from "@/services/save-file.service";
 
+import { NotificationWrapperComponent } from "@/components/notification-wrapper.component";
+import { NotificationComponent } from "@/components/notification.component";
+
 import { useRouter } from "next/navigation";
 import { Activity, use, useEffect, useState } from "react";
+import { createPortal } from "react-dom";
 
 import { compressToEncodedURIComponent, decompressFromEncodedURIComponent } from "lz-string"
 
@@ -20,7 +26,14 @@ type JsonData = Partial<{
   fileName: string,
   previewShowed: boolean,
   editorShowed: boolean
-}>
+}>;
+
+const notificationTransitions: Record<string, CSSProperties> = {
+  entering: { opacity: 1 },
+  entered:  { opacity: 1 },
+  exiting:  { opacity: 0 },
+  exited:  { opacity: 0 },
+}
 
 export const Editor = ({ query }: Props) => {
   const router = useRouter();
@@ -28,12 +41,15 @@ export const Editor = ({ query }: Props) => {
   const { content: json } = use(query);
   const { content, fileName, editorShowed, previewShowed } = JSON.parse(json ? decompressFromEncodedURIComponent(json) : "{}") as JsonData;
 
-  const [jsonData, setJsonData] = useState<Required<JsonData>>({
+  const [ jsonData, setJsonData ] = useState<Required<JsonData>>({
     content: content || "",
     fileName: fileName || "markdown.md",
     editorShowed: editorShowed || true,
     previewShowed: previewShowed || true
   });
+
+  const [ documentState, setDocumentState ] = useState<Document|null>(null);
+  const [ notificationText, setNotificationText ] = useState<string|null>(null);
 
   const gridCollumns =
     jsonData.editorShowed && jsonData.previewShowed
@@ -59,6 +75,8 @@ export const Editor = ({ query }: Props) => {
       return;
     }
     
+    setNotificationText("Синхронизация по URL отключена");
+
     for (let i=0; i < 10; i++) {
       setTimeout(() => {
         console.error("СООБЩИТЕ РАЗРАБОТЧИКУ ПОФИКСИТЬ ПРОБЛЕМУ: https://github.com/fockusty/oniline-files-viewer/issues/new");
@@ -80,6 +98,10 @@ export const Editor = ({ query }: Props) => {
     }
   }, [content, fileName, editorShowed, previewShowed]);
 
+  useEffect(() => {
+    setDocumentState(document);
+  }, []);
+  
   return (
     <div className="min-h-full flex flex-col gap-4 justify-center content-center flex-wrap">
       <div className="w-full flex flex-row flex-wrap gap-2 justify-center">
@@ -121,6 +143,14 @@ export const Editor = ({ query }: Props) => {
 
         {jsonData.previewShowed && <PreviewComponent markdown={jsonData.content} />}
       </div>
+
+      {documentState && notificationText && createPortal((
+        <NotificationWrapperComponent>
+          <NotificationComponent>
+            {notificationText!}
+          </NotificationComponent>
+        </NotificationWrapperComponent>
+      ), documentState.body)}
     </div>
   );
 };
