@@ -4,32 +4,18 @@ import { useState } from "react";
 
 type Props = {
   onEdit: (value: string) => unknown;
-  updateUrl: (value: string) => unknown;
   content?: string;
 };
 
-export const EditorComponent = ({ onEdit, updateUrl, content = "" }: Props) => {
-  const [componentTimeout, setComponentTimeout] = useState<NodeJS.Timeout | null>(null);
-
+export const EditorComponent = ({ onEdit, content = "" }: Props) => {
   return (
     <div className="flex flex-col h-[600px] bg-(--bg-card) py-4 px-8 rounded-lg">
       <h2>Редактирование .md</h2>
 
       <textarea
         id="markdown-editor"
-        onChange={(e) => {
-          const { value } = e.currentTarget;
-          onEdit(value);
-
-          if (componentTimeout) {
-            clearTimeout(componentTimeout);
-          }
-
-          setComponentTimeout(setTimeout(() => {
-            updateUrl(value);
-          }, 1000));
-        }}
         value={content}
+        onChange={(e) => onEdit(e.currentTarget.value)}
         className={[
           "flex-1 w-full p-4 resize-none backdrop-blur-sm rounded-lg font-mono",
           "ring-2 ring-(--fg-mini-text)",

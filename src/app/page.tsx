@@ -6,7 +6,7 @@ import { Suspense } from "react";
 const Page = ({
   searchParams,
 }: {
-  searchParams: Promise<{ json?: string }>;
+  searchParams: Promise<{ content?: string }>;
 }) => {
   return (
     <Suspense fallback={<>...</>}>
