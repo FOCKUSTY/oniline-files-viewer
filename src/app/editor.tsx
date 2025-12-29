@@ -34,7 +34,13 @@ export const Editor = ({ query }: Props) => {
   const router = useRouter();
 
   const { content: json } = use(query);
-  const { content, fileName, editorShowed, previewShowed, synchronousScrollEnabled } = JSON.parse(
+  const {
+    content,
+    fileName,
+    editorShowed,
+    previewShowed,
+    synchronousScrollEnabled,
+  } = JSON.parse(
     json ? decompressFromEncodedURIComponent(json) : "{}",
   ) as JsonData;
 
@@ -43,9 +49,9 @@ export const Editor = ({ query }: Props) => {
     fileName: fileName || "markdown.md",
     editorShowed: editorShowed || true,
     previewShowed: previewShowed || true,
-    synchronousScrollEnabled: synchronousScrollEnabled || true
+    synchronousScrollEnabled: synchronousScrollEnabled || true,
   });
-  
+
   const [documentState, setDocumentState] = useState<Document | null>(null);
   const [notificationText, setNotificationText] = useState<string | null>(null);
   const [urlSynconizationEnabled, setUrlSynconizationEnabled] =
@@ -138,7 +144,10 @@ export const Editor = ({ query }: Props) => {
         fileName: fileName || "markdown.md",
         editorShowed: editorShowed === undefined ? true : editorShowed,
         previewShowed: previewShowed === undefined ? true : previewShowed,
-        synchronousScrollEnabled: synchronousScrollEnabled === undefined ? true : synchronousScrollEnabled
+        synchronousScrollEnabled:
+          synchronousScrollEnabled === undefined
+            ? true
+            : synchronousScrollEnabled,
       });
     } catch (error) {
       console.error("Ошибка при декодировании контента из URL");
@@ -179,9 +188,16 @@ export const Editor = ({ query }: Props) => {
         </Button>
 
         <Button onClick={share}>Поделиться</Button>
-        <Button onClick={() => {
-          updateJson({ synchronousScrollEnabled: !jsonData.synchronousScrollEnabled })
-        }}>{jsonData.synchronousScrollEnabled ? "Вы" : "В"}ключить синхронный скролл</Button>
+        <Button
+          onClick={() => {
+            updateJson({
+              synchronousScrollEnabled: !jsonData.synchronousScrollEnabled,
+            });
+          }}
+        >
+          {jsonData.synchronousScrollEnabled ? "Вы" : "В"}ключить синхронный
+          скролл
+        </Button>
 
         {jsonData.editorShowed && (
           <Button
@@ -206,10 +222,7 @@ export const Editor = ({ query }: Props) => {
         </Activity>
 
         {jsonData.previewShowed && (
-          <PreviewComponent
-            ref={previewRef}
-            markdown={jsonData.content}
-          />
+          <PreviewComponent ref={previewRef} markdown={jsonData.content} />
         )}
       </div>
 

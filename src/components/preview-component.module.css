@@ -1,5 +1,7 @@
 .preview {
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans', Helvetica, Arial, sans-serif;
+  font-family:
+    -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans", Helvetica,
+    Arial, sans-serif;
   line-height: 1.7;
   color: #e6edf3;
 }
@@ -20,22 +22,22 @@
   border-bottom: 0.05em solid #30363d;
 }
 
-.preview h3 { 
-  font-size: 1.25em; 
-  font-weight: 600; 
-  margin: 0 0 0.8em; 
+.preview h3 {
+  font-size: 1.25em;
+  font-weight: 600;
+  margin: 0 0 0.8em;
 }
 
-.preview h4, 
-.preview h5, 
-.preview h6 { 
-  font-size: 1em; 
-  font-weight: 600; 
-  margin: 0 0 0.8em; 
+.preview h4,
+.preview h5,
+.preview h6 {
+  font-size: 1em;
+  font-weight: 600;
+  margin: 0 0 0.8em;
 }
 
-.preview p { 
-  margin: 0 0 1.2em; 
+.preview p {
+  margin: 0 0 1.2em;
 }
 
 .preview blockquote {
@@ -54,9 +56,9 @@
   margin: 0 0 1.2em;
 }
 
-.preview ul li { 
+.preview ul li {
   list-style-type: disc;
-  margin: 0.2em 0; 
+  margin: 0.2em 0;
   padding-left: 0.1em;
 }
 
@@ -67,12 +69,12 @@
   list-style-type: circle;
 }
 
-.preview ol li { 
+.preview ol li {
   list-style-type: decimal;
 }
 
-.preview li > p { 
-  margin: 0; 
+.preview li > p {
+  margin: 0;
 }
 
 .preview code:not(pre *) {
@@ -80,7 +82,7 @@
   padding: 0.2em 0.4em;
   border-radius: 0.4em;
   font-size: 0.9em;
-  font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
+  font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
   color: var(--fg-default);
 }
 
@@ -117,7 +119,7 @@
   backdrop-filter: blur(0.25em);
 }
 
-.preview th, 
+.preview th,
 .preview td {
   padding: 0.75em 1em;
   border: 0.05em solid var(--fg-mini-text);

@@ -6,14 +6,25 @@ type Props = {
   onEdit: (value: string) => unknown;
   content?: string;
   urlSynconizationEnabled: boolean;
-  synchronousScrollEnabled: boolean
-  previewRef: RefObject<HTMLDivElement|null>;
+  synchronousScrollEnabled: boolean;
+  previewRef: RefObject<HTMLDivElement | null>;
 };
 
-export const EditorComponent = ({ onEdit, urlSynconizationEnabled, content = "", previewRef, synchronousScrollEnabled }: Props) => {
-  const words = content.trim().split(/\s+/).filter(word => word.length > 0)
+export const EditorComponent = ({
+  onEdit,
+  urlSynconizationEnabled,
+  content = "",
+  previewRef,
+  synchronousScrollEnabled,
+}: Props) => {
+  const words = content
+    .trim()
+    .split(/\s+/)
+    .filter((word) => word.length > 0);
 
-  const handleScroll = (event:UIEvent<HTMLTextAreaElement, globalThis.UIEvent>) => {
+  const handleScroll = (
+    event: UIEvent<HTMLTextAreaElement, globalThis.UIEvent>,
+  ) => {
     if (!previewRef.current) {
       return;
     }
@@ -24,12 +35,14 @@ export const EditorComponent = ({ onEdit, urlSynconizationEnabled, content = "",
 
     const source = event.currentTarget;
     const target = previewRef.current;
-    
-    const scrollPercent = source.scrollTop / (source.scrollHeight - source.clientHeight);
-    const targetScrollTop = scrollPercent * (target.scrollHeight - target.clientHeight);
+
+    const scrollPercent =
+      source.scrollTop / (source.scrollHeight - source.clientHeight);
+    const targetScrollTop =
+      scrollPercent * (target.scrollHeight - target.clientHeight);
 
     target.scrollTop = targetScrollTop;
-  }
+  };
 
   return (
     <div className="flex flex-col h-[600px] bg-(--bg-card) py-4 px-8 rounded-lg">
@@ -50,7 +63,9 @@ export const EditorComponent = ({ onEdit, urlSynconizationEnabled, content = "",
       />
 
       <div className="mt-2 text-xs text-(--fg-mini-text) flex justify-between">
-        <span>Изменения {urlSynconizationEnabled ? "" : "не"} сохраняются в URL</span>
+        <span>
+          Изменения {urlSynconizationEnabled ? "" : "не"} сохраняются в URL
+        </span>
         <span>Символов: {content.length}</span>
         <span>Слов: {words.length}</span>
       </div>

@@ -23,7 +23,7 @@ export const PreviewComponent = ({ markdown, ref }: Props) => {
       <div
         className={[
           "rounded-lg ring-2 ring-(--fg-mini-text) h-full py-2 px-4 overflow-y-auto",
-          styles.preview
+          styles.preview,
         ].join(" ")}
         ref={ref}
       >
@@ -34,7 +34,7 @@ export const PreviewComponent = ({ markdown, ref }: Props) => {
               if (!children) {
                 return;
               }
-              
+
               const match = /language-(\w+)/.exec(className || "");
               return !inline && match ? (
                 <SyntaxHighlighter
@@ -44,7 +44,7 @@ export const PreviewComponent = ({ markdown, ref }: Props) => {
                   customStyle={{
                     margin: "0",
                     background: "var(--bg-component)",
-                    backdropFilter: "blur(4px)"
+                    backdropFilter: "blur(4px)",
                   }}
                   {...props}
                 >
