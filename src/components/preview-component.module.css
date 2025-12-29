@@ -1,0 +1,160 @@
+.preview {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans', Helvetica, Arial, sans-serif;
+  line-height: 1.7;
+  color: #e6edf3;
+}
+
+.preview h1 {
+  font-size: 2em;
+  font-weight: 700;
+  padding-bottom: 0.5em;
+  margin: 0 0 1em;
+  border-bottom: 0.125em solid #30363d;
+}
+
+.preview h2 {
+  font-size: 1.5em;
+  font-weight: 600;
+  padding-bottom: 0.4em;
+  margin: 0 0 1em;
+  border-bottom: 0.05em solid #30363d;
+}
+
+.preview h3 { 
+  font-size: 1.25em; 
+  font-weight: 600; 
+  margin: 0 0 0.8em; 
+}
+
+.preview h4, 
+.preview h5, 
+.preview h6 { 
+  font-size: 1em; 
+  font-weight: 600; 
+  margin: 0 0 0.8em; 
+}
+
+.preview p { 
+  margin: 0 0 1.2em; 
+}
+
+.preview blockquote {
+  padding: 0.8em 1.2em;
+  margin: 1.2em 0;
+  color: #8b949e;
+  border-left: 0.25em solid #2ea043;
+  background-color: var(--bg-component);
+  backdrop-filter: blur(0.25em);
+  border-radius: 0 0.4em 0.4em 0;
+}
+
+.preview ul,
+.preview ol {
+  padding-left: 1em;
+  margin: 0 0 1.2em;
+}
+
+.preview ul li { 
+  list-style-type: disc;
+  margin: 0.2em 0; 
+  padding-left: 0.1em;
+}
+
+.preview ol ul li,
+.preview ol ol li,
+.preview ul ol li,
+.preview ul ul li {
+  list-style-type: circle;
+}
+
+.preview ol li { 
+  list-style-type: decimal;
+}
+
+.preview li > p { 
+  margin: 0; 
+}
+
+.preview code:not(pre *) {
+  background-color: var(--bg-component);
+  padding: 0.2em 0.4em;
+  border-radius: 0.4em;
+  font-size: 0.9em;
+  font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
+  color: var(--fg-default);
+}
+
+.preview pre {
+  margin: 1.5em 0;
+  border-radius: 0.5em;
+  overflow: hidden;
+  box-shadow: 0 0.25em 0.75em var(--bg-default);
+}
+
+.preview pre div {
+  border-radius: 0.5em;
+  margin: 0;
+}
+
+.preview hr {
+  height: 0.05em;
+  background-color: var(--fg-mini-text);
+  border: 0;
+  margin: 2em 0;
+}
+
+.preview table {
+  border-collapse: collapse;
+  width: 100%;
+  margin: 1.5em 0;
+  display: block;
+  overflow-x: auto;
+}
+
+.preview th {
+  font-weight: 600;
+  background-color: var(--bg-smooth);
+  backdrop-filter: blur(0.25em);
+}
+
+.preview th, 
+.preview td {
+  padding: 0.75em 1em;
+  border: 0.05em solid var(--fg-mini-text);
+  text-align: left;
+  backdrop-filter: blur(0.05em);
+}
+
+.preview tr:nth-child(even) {
+  background-color: var(--bg-default);
+}
+
+.preview a {
+  color: #4493f8;
+  text-decoration: none;
+  border-bottom: 0.05em solid rgba(68, 147, 248, 0.3);
+  transition: all 0.2s ease;
+}
+
+.preview a:hover {
+  color: #79b8ff;
+  border-bottom-color: #79b8ff;
+}
+
+.preview img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 0.4em;
+  margin: 1em 0;
+}
+
+.preview del {
+  color: var(--bg-smooth);
+}
+
+.preview mark {
+  background-color: var(--bg-smooth);
+  color: inherit;
+  padding: 0.1em 0.3em;
+  border-radius: 0.2em;
+}

@@ -18,7 +18,7 @@ export const EditorComponent = ({ onEdit, urlSynconizationEnabled, content = "" 
         value={content}
         onChange={(e) => onEdit(e.currentTarget.value)}
         className={[
-          "flex-1 w-full p-4 resize-none backdrop-blur-sm rounded-lg font-mono",
+          "flex-1 w-full py-2 px-4 resize-none backdrop-blur-sm rounded-lg font-mono",
           "ring-2 ring-(--fg-mini-text)",
           "focus:outline-none focus:ring-2 focus:ring-(--fg-default)",
         ].join(" ")}
