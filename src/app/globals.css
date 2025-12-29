@@ -54,20 +54,20 @@ body {
 }
 
 *::-webkit-scrollbar {
-  width: 0.75em;
+  width: 0.5em;
 }
 
 *::-webkit-scrollbar-track {
-  border-radius: 10px;
+  border-radius: 0.5em;
 
-  background: var(--smooth-background-color);
+  background: var(--bg-smooth);
 }
 
 *::-webkit-scrollbar-thumb {
-  border-radius: 10px;
+  border-radius: 0.5em;
 
-  background-color: var(--background);
-  border: 2px solid var(--mini-text-color);
+  background-color: var(--bg-default);
+  border: 0.1em solid var(--fg-mini-text);
 }
 
 a {
