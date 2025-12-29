@@ -1,7 +1,5 @@
 "use client";
 
-import type { CSSProperties } from "react";
-
 import { EditorComponent } from "@/components/editor.component";
 import { PreviewComponent } from "@/components/preview.component";
 
@@ -12,7 +10,7 @@ import { NotificationWrapperComponent } from "@/components/notification-wrapper.
 import { NotificationComponent } from "@/components/notification.component";
 
 import { useRouter } from "next/navigation";
-import { Activity, use, useEffect, useState } from "react";
+import { Activity, use, useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 
 import { compressToEncodedURIComponent, decompressFromEncodedURIComponent } from "lz-string"
@@ -27,13 +25,6 @@ type JsonData = Partial<{
   previewShowed: boolean,
   editorShowed: boolean
 }>;
-
-const notificationTransitions: Record<string, CSSProperties> = {
-  entering: { opacity: 1 },
-  entered:  { opacity: 1 },
-  exiting:  { opacity: 0 },
-  exited:  { opacity: 0 },
-}
 
 export const Editor = ({ query }: Props) => {
   const router = useRouter();
@@ -50,6 +41,9 @@ export const Editor = ({ query }: Props) => {
 
   const [ documentState, setDocumentState ] = useState<Document|null>(null);
   const [ notificationText, setNotificationText ] = useState<string|null>(null);
+  const [ urlSynconizationEnabled, setUrlSynconizationEnabled ] = useState<boolean>(true);
+  
+  const notificationRef = useRef<HTMLDivElement|null>(null);
 
   const gridCollumns =
     jsonData.editorShowed && jsonData.previewShowed
@@ -64,25 +58,63 @@ export const Editor = ({ query }: Props) => {
     const url = new URL(window.location.href);
     url.searchParams.set("content", compressToEncodedURIComponent(JSON.stringify(jsonData)));
     navigator.clipboard.writeText(url.toString());
+    notificate("Ссылка скопирована!");
   };
+
+  const clearNotification = () => {
+    if (!notificationRef.current) {
+      return;
+    }
+    
+    notificationRef.current.style.opacity = "0";
+    setTimeout(() => {
+      notificationRef.current!.style.display = "none";
+      setNotificationText(null);
+    }, 300);
+  };
+
+  const notificate = (text: string) => {
+    if (!notificationRef.current) {
+      return;
+    }
+    
+    notificationRef.current.style.display = "flex";
+    setTimeout(() => {
+      notificationRef.current!.style.opacity = "1";
+    }, 100);
+
+    setNotificationText(text);
+  };
+
+  useEffect(() => {
+    setDocumentState(document);
+  }, []);
 
   useEffect(() => {
     const jsonUriComponent = compressToEncodedURIComponent(JSON.stringify(jsonData));
     const href = '/?content=' + jsonUriComponent;
-    router.replace(href, { scroll: false });
-    
-    if (href.length < 10000) {
+
+    if (urlSynconizationEnabled) {
+      router.replace(href, { scroll: false });
+    }
+
+    const maxLimitExceeded = href.length >= 10000;
+    const urlSynconizationDisabled = !urlSynconizationEnabled;
+    if (maxLimitExceeded && urlSynconizationDisabled) {
+      return;
+    }
+
+    if (maxLimitExceeded) {
+      setUrlSynconizationEnabled(false);
+      notificate("Синхронизация по URL отключена");
       return;
     }
     
-    setNotificationText("Синхронизация по URL отключена");
-
-    for (let i=0; i < 10; i++) {
-      setTimeout(() => {
-        console.error("СООБЩИТЕ РАЗРАБОТЧИКУ ПОФИКСИТЬ ПРОБЛЕМУ: https://github.com/fockusty/oniline-files-viewer/issues/new");
-        console.error("ПИШИТЕ: ЗДРАВСТВУЙТЕ, ВАМ НУЖНО ПОФИКСИТЬ ПРОБЛЕМУ");
-      }, 100 * i);
+    if (urlSynconizationDisabled) {
+      notificate("Синхронизация по URL включена");
     }
+
+    return setUrlSynconizationEnabled(true);
   }, [jsonData]);
 
   useEffect(() => {
@@ -90,8 +122,8 @@ export const Editor = ({ query }: Props) => {
       setJsonData({
         content: content || "",
         fileName: fileName || "markdown.md",
-        editorShowed: editorShowed || true,
-        previewShowed: previewShowed || true
+        editorShowed: editorShowed === undefined ? true : editorShowed,
+        previewShowed: previewShowed === undefined ? true : previewShowed
       });
     } catch (error) {
       console.error("Ошибка при декодировании контента из URL");
@@ -99,8 +131,14 @@ export const Editor = ({ query }: Props) => {
   }, [content, fileName, editorShowed, previewShowed]);
 
   useEffect(() => {
-    setDocumentState(document);
-  }, []);
+    if (!notificationText) {
+      return;
+    }
+
+    setTimeout(() => {
+      clearNotification();
+    }, 1000);
+  }, [notificationText]);
   
   return (
     <div className="min-h-full flex flex-col gap-4 justify-center content-center flex-wrap">
@@ -119,6 +157,7 @@ export const Editor = ({ query }: Props) => {
         <Button
           onClick={() => {
             navigator.clipboard.writeText(jsonData.content);
+            notificate("Текст скопирован!");
           }}
         >
           Скопировать
@@ -144,10 +183,17 @@ export const Editor = ({ query }: Props) => {
         {jsonData.previewShowed && <PreviewComponent markdown={jsonData.content} />}
       </div>
 
-      {documentState && notificationText && createPortal((
+      {documentState && createPortal((
         <NotificationWrapperComponent>
-          <NotificationComponent>
-            {notificationText!}
+          <NotificationComponent
+            ref={notificationRef}
+            className="duration-300"
+            style={{
+              display: notificationText ? "flex" : "none",
+              opacity: "0"
+            }}
+          >
+            {notificationText}
           </NotificationComponent>
         </NotificationWrapperComponent>
       ), documentState.body)}

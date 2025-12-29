@@ -1,15 +1,17 @@
-import type { CSSProperties, ReactNode } from "react";
+import type { DetailedHTMLProps, HTMLAttributes, ReactNode } from "react";
 
 type Props = {
   children: ReactNode,
-  style?: CSSProperties
-}
+} & DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, HTMLDivElement>
 
-export const NotificationWrapperComponent = ({ style, children }: Props) => {
+export const NotificationWrapperComponent = ({ className, children, ...props }: Props) => {
   return (
     <div
-      style={style}
-      className="fixed mx-[40%]"
+      className={[
+        "fixed mx-[40%]",
+        className
+      ].join(" ")}
+      {...props}
     >
       <div className="relative bottom-50">
         {children}
