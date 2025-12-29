@@ -109,7 +109,7 @@ export const Editor = ({ query }: Props) => {
       router.replace(href, { scroll: false });
     }
 
-    const maxLimitExceeded = href.length >= 10000;
+    const maxLimitExceeded = href.length >= 5000;
     const urlSynconizationDisabled = !urlSynconizationEnabled;
     if (maxLimitExceeded && urlSynconizationDisabled) {
       return;
@@ -190,6 +190,7 @@ export const Editor = ({ query }: Props) => {
       <div className={`grid gap-6 ${gridCollumns}`}>
         <Activity mode={jsonData.editorShowed ? "visible" : "hidden"}>
           <EditorComponent
+            urlSynconizationEnabled={urlSynconizationEnabled}
             content={jsonData.content}
             onEdit={(content: string) => updateJson({ content })}
           />
