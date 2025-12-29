@@ -6,11 +6,11 @@ type Props = {
   onEdit: (value: string) => unknown;
   content?: string;
   urlSynconizationEnabled: boolean;
-  autoScrollEnabled: boolean
+  synchronousScrollEnabled: boolean
   previewRef: RefObject<HTMLDivElement|null>;
 };
 
-export const EditorComponent = ({ onEdit, urlSynconizationEnabled, content = "", previewRef, autoScrollEnabled }: Props) => {
+export const EditorComponent = ({ onEdit, urlSynconizationEnabled, content = "", previewRef, synchronousScrollEnabled }: Props) => {
   const words = content.trim().split(/\s+/).filter(word => word.length > 0)
 
   const handleScroll = (event:UIEvent<HTMLTextAreaElement, globalThis.UIEvent>) => {
@@ -18,7 +18,7 @@ export const EditorComponent = ({ onEdit, urlSynconizationEnabled, content = "",
       return;
     }
 
-    if (!autoScrollEnabled) {
+    if (!synchronousScrollEnabled) {
       return;
     }
 
