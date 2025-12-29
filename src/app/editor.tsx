@@ -27,13 +27,14 @@ type JsonData = Partial<{
   fileName: string;
   previewShowed: boolean;
   editorShowed: boolean;
+  autoScrollEnabled: boolean;
 }>;
 
 export const Editor = ({ query }: Props) => {
   const router = useRouter();
 
   const { content: json } = use(query);
-  const { content, fileName, editorShowed, previewShowed } = JSON.parse(
+  const { content, fileName, editorShowed, previewShowed, autoScrollEnabled } = JSON.parse(
     json ? decompressFromEncodedURIComponent(json) : "{}",
   ) as JsonData;
 
@@ -42,14 +43,16 @@ export const Editor = ({ query }: Props) => {
     fileName: fileName || "markdown.md",
     editorShowed: editorShowed || true,
     previewShowed: previewShowed || true,
+    autoScrollEnabled: autoScrollEnabled || true
   });
-
+  
   const [documentState, setDocumentState] = useState<Document | null>(null);
   const [notificationText, setNotificationText] = useState<string | null>(null);
   const [urlSynconizationEnabled, setUrlSynconizationEnabled] =
     useState<boolean>(true);
 
   const notificationRef = useRef<HTMLDivElement | null>(null);
+  const previewRef = useRef<HTMLDivElement | null>(null);
 
   const gridCollumns =
     jsonData.editorShowed && jsonData.previewShowed
@@ -135,6 +138,7 @@ export const Editor = ({ query }: Props) => {
         fileName: fileName || "markdown.md",
         editorShowed: editorShowed === undefined ? true : editorShowed,
         previewShowed: previewShowed === undefined ? true : previewShowed,
+        autoScrollEnabled: autoScrollEnabled === undefined ? true : autoScrollEnabled
       });
     } catch (error) {
       console.error("Ошибка при декодировании контента из URL");
@@ -175,6 +179,9 @@ export const Editor = ({ query }: Props) => {
         </Button>
 
         <Button onClick={share}>Поделиться</Button>
+        <Button onClick={() => {
+          updateJson({ autoScrollEnabled: !jsonData.autoScrollEnabled })
+        }}>{jsonData.autoScrollEnabled ? "Вы" : "В"}ключить автоскролл</Button>
 
         {jsonData.editorShowed && (
           <Button
@@ -190,6 +197,8 @@ export const Editor = ({ query }: Props) => {
       <div className={`grid gap-6 ${gridCollumns}`}>
         <Activity mode={jsonData.editorShowed ? "visible" : "hidden"}>
           <EditorComponent
+            autoScrollEnabled={jsonData.autoScrollEnabled}
+            previewRef={previewRef}
             urlSynconizationEnabled={urlSynconizationEnabled}
             content={jsonData.content}
             onEdit={(content: string) => updateJson({ content })}
@@ -197,7 +206,10 @@ export const Editor = ({ query }: Props) => {
         </Activity>
 
         {jsonData.previewShowed && (
-          <PreviewComponent markdown={jsonData.content} />
+          <PreviewComponent
+            ref={previewRef}
+            markdown={jsonData.content}
+          />
         )}
       </div>
 
