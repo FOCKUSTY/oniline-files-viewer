@@ -3,11 +3,9 @@
 import { EditorComponent } from "@/components/editor.component";
 import { PreviewComponent } from "@/components/preview.component";
 
-import { Button } from "@/ui/button.ui";
-import { saveFile } from "@/services/save-file.service";
-
 import { NotificationWrapperComponent } from "@/components/notification-wrapper.component";
 import { NotificationComponent } from "@/components/notification.component";
+import { HelpButtons } from "@/components/help-buttons.component";
 
 import { useRouter } from "next/navigation";
 import { Activity, use, useEffect, useRef, useState } from "react";
@@ -24,7 +22,6 @@ type Props = {
 
 type JsonData = Partial<{
   content: string;
-  fileName: string;
   previewShowed: boolean;
   editorShowed: boolean;
   synchronousScrollEnabled: boolean;
@@ -36,7 +33,6 @@ export const Editor = ({ query }: Props) => {
   const { content: json } = use(query);
   const {
     content,
-    fileName,
     editorShowed,
     previewShowed,
     synchronousScrollEnabled,
@@ -46,7 +42,6 @@ export const Editor = ({ query }: Props) => {
 
   const [jsonData, setJsonData] = useState<Required<JsonData>>({
     content: content || "",
-    fileName: fileName || "markdown.md",
     editorShowed: editorShowed || true,
     previewShowed: previewShowed || true,
     synchronousScrollEnabled: synchronousScrollEnabled || true,
@@ -67,16 +62,6 @@ export const Editor = ({ query }: Props) => {
 
   const updateJson = (data: JsonData) => {
     return setJsonData((p) => ({ ...p, ...data }));
-  };
-
-  const share = () => {
-    const url = new URL(window.location.href);
-    url.searchParams.set(
-      "content",
-      compressToEncodedURIComponent(JSON.stringify(jsonData)),
-    );
-    navigator.clipboard.writeText(url.toString());
-    notificate("Ссылка скопирована!");
   };
 
   const clearNotification = () => {
@@ -141,7 +126,6 @@ export const Editor = ({ query }: Props) => {
     try {
       setJsonData({
         content: content || "",
-        fileName: fileName || "markdown.md",
         editorShowed: editorShowed === undefined ? true : editorShowed,
         previewShowed: previewShowed === undefined ? true : previewShowed,
         synchronousScrollEnabled:
@@ -152,7 +136,7 @@ export const Editor = ({ query }: Props) => {
     } catch (error) {
       console.error("Ошибка при декодировании контента из URL");
     }
-  }, [content, fileName, editorShowed, previewShowed]);
+  }, [content, editorShowed, previewShowed, synchronousScrollEnabled]);
 
   useEffect(() => {
     if (!notificationText) {
@@ -166,49 +150,9 @@ export const Editor = ({ query }: Props) => {
 
   return (
     <div className="min-h-full flex flex-col gap-4 justify-center content-center flex-wrap">
-      <div className="w-full flex flex-row flex-wrap gap-2 justify-center">
-        {jsonData.previewShowed && (
-          <Button
-            onClick={() => updateJson({ editorShowed: !jsonData.editorShowed })}
-          >
-            {jsonData.editorShowed ? "Скрыть" : "Показать"} редактор
-          </Button>
-        )}
-
-        <Button onClick={() => saveFile(jsonData.content || "", "markdown.md")}>
-          Сохранить
-        </Button>
-        <Button
-          onClick={() => {
-            navigator.clipboard.writeText(jsonData.content);
-            notificate("Текст скопирован!");
-          }}
-        >
-          Скопировать
-        </Button>
-
-        <Button onClick={share}>Поделиться</Button>
-        <Button
-          onClick={() => {
-            updateJson({
-              synchronousScrollEnabled: !jsonData.synchronousScrollEnabled,
-            });
-          }}
-        >
-          {jsonData.synchronousScrollEnabled ? "Вы" : "В"}ключить синхронный
-          скролл
-        </Button>
-
-        {jsonData.editorShowed && (
-          <Button
-            onClick={() =>
-              updateJson({ previewShowed: !jsonData.previewShowed })
-            }
-          >
-            {jsonData.previewShowed ? "Скрыть" : "Показать"} предпросмотр
-          </Button>
-        )}
-      </div>
+      <HelpButtons
+        {...{jsonData, notificate, updateJson}}
+      />
 
       <div className={`grid gap-6 ${gridCollumns}`}>
         <Activity mode={jsonData.editorShowed ? "visible" : "hidden"}>
