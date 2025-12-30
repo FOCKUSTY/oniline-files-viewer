@@ -3,11 +3,6 @@ export const enum SwitcherText {
   hide = "Скрыть"
 }
 
-export const enum ActiveStateText {
-  visible = "visible",
-  hidden = "hidden"
-}
-
 export const enum Notifications {
   textCopied = "Текст скопирован!",
   linkCopied = "Ссылка скопирована!",
