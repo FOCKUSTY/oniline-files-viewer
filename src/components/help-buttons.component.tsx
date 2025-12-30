@@ -1,5 +1,7 @@
+import { fileName, Notifications, Query, SwitcherText } from "@/constants";
 import { saveFile } from "@/services/save-file.service";
 import { Button } from "@/ui/button.ui";
+
 import { compressToEncodedURIComponent } from "lz-string";
 
 type JsonData = {
@@ -19,11 +21,11 @@ export const HelpButtons = ({ jsonData, updateJson, notificate }: Props) => {
   const share = () => {
     const url = new URL(window.location.href);
     url.searchParams.set(
-      "content",
+      Query.json,
       compressToEncodedURIComponent(JSON.stringify(jsonData)),
     );
     navigator.clipboard.writeText(url.toString());
-    notificate("Ссылка скопирована!");
+    notificate(Notifications.linkCopied);
   };
 
   const className = "flex flex-row flex-wrap gap-1";
@@ -35,7 +37,7 @@ export const HelpButtons = ({ jsonData, updateJson, notificate }: Props) => {
           <Button
             onClick={() => updateJson({ editorShowed: !jsonData.editorShowed })}
           >
-            {jsonData.editorShowed ? "Скрыть" : "Показать"} редактор
+            {jsonData.editorShowed ? SwitcherText.show : SwitcherText.hide} редактор
           </Button>
         )}
     
@@ -45,19 +47,19 @@ export const HelpButtons = ({ jsonData, updateJson, notificate }: Props) => {
               updateJson({ previewShowed: !jsonData.previewShowed })
             }
           >
-            {jsonData.previewShowed ? "Скрыть" : "Показать"} предпросмотр
+            {jsonData.previewShowed ? SwitcherText.show : SwitcherText.hide} предпросмотр
           </Button>
         )}
       </div>
     
       <div className={className}>
-        <Button onClick={() => saveFile(jsonData.content, "markdown.md")}>
+        <Button onClick={() => saveFile(jsonData.content, fileName)}>
           Сохранить
         </Button>
         <Button
           onClick={() => {
             navigator.clipboard.writeText(jsonData.content);
-            notificate("Текст скопирован!");
+            notificate(Notifications.textCopied);
           }}
         >
           Скопировать

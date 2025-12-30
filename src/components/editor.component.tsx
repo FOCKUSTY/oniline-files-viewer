@@ -1,5 +1,6 @@
 "use client";
 
+import { getChangesSavingInUrlText } from "@/constants/not-sorted.constants";
 import type { RefObject, UIEvent } from "react";
 
 type Props = {
@@ -64,7 +65,7 @@ export const EditorComponent = ({
 
       <div className="mt-2 text-xs text-(--fg-mini-text) flex justify-between">
         <span>
-          Изменения {urlSynconizationEnabled ? "" : "не"} сохраняются в URL
+          {getChangesSavingInUrlText(urlSynconizationEnabled)}
         </span>
         <span>Символов: {content.length}</span>
         <span>Слов: {words.length}</span>

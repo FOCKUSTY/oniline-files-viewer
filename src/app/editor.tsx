@@ -1,5 +1,7 @@
 "use client";
 
+import { Notifications, Query } from "@/constants";
+
 import { EditorComponent } from "@/components/editor.component";
 import { PreviewComponent } from "@/components/preview.component";
 
@@ -97,7 +99,7 @@ export const Editor = ({ query }: Props) => {
     const jsonUriComponent = compressToEncodedURIComponent(
       JSON.stringify(jsonData),
     );
-    const href = "/?content=" + jsonUriComponent;
+    const href = `/?${Query.json}=` + jsonUriComponent;
 
     if (urlSynconizationEnabled) {
       router.replace(href, { scroll: false });
@@ -111,12 +113,12 @@ export const Editor = ({ query }: Props) => {
 
     if (maxLimitExceeded) {
       setUrlSynconizationEnabled(false);
-      notificate("Синхронизация по URL отключена");
+      notificate(Notifications.syncronizationInUrlDisabled);
       return;
     }
 
     if (urlSynconizationDisabled) {
-      notificate("Синхронизация по URL включена");
+      notificate(Notifications.syncronizationInUrlEnabled);
     }
 
     return setUrlSynconizationEnabled(true);

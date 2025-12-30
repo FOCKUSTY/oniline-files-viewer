@@ -1,5 +1,7 @@
 "use client";
 
+import { company, yearOfStart } from "@/constants";
+
 export const FooterLayout = () => {
-  return <footer>© 2025-{new Date().getFullYear()} The Void</footer>;
+  return <footer>© {yearOfStart}-{new Date().getFullYear()} {company}</footer>;
 };
