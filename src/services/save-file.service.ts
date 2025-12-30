@@ -1,6 +1,7 @@
+import { fileName } from "@/constants";
+
 export const saveFile = (
   content: string | Blob,
-  fileName: string,
   mimeType: string = "text/plain",
 ) => {
   const blob =

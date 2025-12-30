@@ -53,7 +53,7 @@ export const HelpButtons = ({ jsonData, updateJson, notificate }: Props) => {
       </div>
     
       <div className={className}>
-        <Button onClick={() => saveFile(jsonData.content, fileName)}>
+        <Button onClick={() => saveFile(jsonData.content)}>
           Сохранить
         </Button>
         <Button
