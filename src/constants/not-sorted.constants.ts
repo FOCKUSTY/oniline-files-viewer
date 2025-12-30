@@ -14,6 +14,8 @@ export const getChangesSavingInUrlText = (saving: boolean) => {
   return `Изменения ${saving ? "" : "не"} сохраняются в URL`;
 };
 
+export const maxLimitQuerySymbols = 5000;
+
 export const yearOfStart = "2025";
 export const company = "The Void";
 export const fileName = "markdown.md";

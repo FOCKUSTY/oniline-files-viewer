@@ -1,6 +1,6 @@
 "use client";
 
-import { Notifications, Query } from "@/constants";
+import { maxLimitQuerySymbols, Notifications, Query } from "@/constants";
 
 import { EditorComponent } from "@/components/editor.component";
 import { PreviewComponent } from "@/components/preview.component";
@@ -105,7 +105,7 @@ export const Editor = ({ query }: Props) => {
       router.replace(href, { scroll: false });
     }
 
-    const maxLimitExceeded = href.length >= 5000;
+    const maxLimitExceeded = href.length >= maxLimitQuerySymbols;
     const urlSynconizationDisabled = !urlSynconizationEnabled;
     if (maxLimitExceeded && urlSynconizationDisabled) {
       return;
